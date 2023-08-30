@@ -29,6 +29,13 @@
             {
               "client_id": "1014003207552-5shvehohfkvg420365it7sbd3f8u33cu.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1014003207552-s32kggqv8etncqrpifdmc8tcj1sj5g9b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.riverpod2"
+              }
             }
           ]
         }
