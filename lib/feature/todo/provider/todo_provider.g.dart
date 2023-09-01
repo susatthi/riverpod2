@@ -52,7 +52,7 @@ final todosProvider = AutoDisposeStreamProvider<List<ToDo>>.internal(
 );
 
 typedef TodosRef = AutoDisposeStreamProviderRef<List<ToDo>>;
-String _$todoControllerHash() => r'7102e9097b69e26e9e8963018a9220262f61caaf';
+String _$todoControllerHash() => r'4d3753689aa6cffa063fc73828dc808ce3997cbe';
 
 /// TODO③：完了状態になっているTodoインスタンスはすべて下にまとまるように順番を変更するProviderを作ってみよう
 /// todosProviderを使ってやれば簡単にできそうだね。

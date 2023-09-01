@@ -9,23 +9,25 @@ class TodoListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// 3つの状態によってWidgetを出し分ける
+    /// - 読み取り成功！
+    /// - 読み取り失敗！
+    /// - 読み取り中！
     return ref.watch(todosProvider).when(
+          /// 読み取り成功！
           data: (data) {
             return ListView.builder(
               shrinkWrap: true,
               itemCount: data.length,
-              itemBuilder: (context, index) {
-                final todo = data[index];
-                return TodoListTile(todo: todo);
-              },
+              itemBuilder: (context, index) => TodoListTile(todo: data[index]),
             );
           },
-          error: (e, s) => const Center(
-            child: Text('エラーです'),
-          ),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
+
+          /// 読み取り失敗！
+          error: (_, __) => const Center(child: Text('エラーです')),
+
+          /// 今読み取り中！
+          loading: () => const Center(child: CircularProgressIndicator()),
         );
   }
 }

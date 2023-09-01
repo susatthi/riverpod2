@@ -17,6 +17,10 @@ class Listener<T> extends Mock {
   void call(T? previous, T next);
 }
 
+// TODO：完了機能を実装した上でテストコードを追加してみよう。
+/// ヒント：完了のための関数を実行したあと、verifyInOrderにて、isCompletedがfalseからtrueに変化することを確かめよう。
+/// 初級編でやる人はexpectでisCompletedの値を調べれればいいね。
+
 void main() {
   setUpAll(() {
     /// any関数を使うために必要
@@ -56,7 +60,7 @@ void main() {
     /// 読み込みが終わるまで待つ
     await container.read(todosProvider.future);
 
-    /// futureで待って、空のListが手に入る
+    /// listとlistの比較はlistEqualsを使う
     expect(listEquals(asyncValue?.value, <ToDo>[]), true);
 
     const expectedDescription = 'test';
@@ -68,7 +72,7 @@ void main() {
 
     final description = asyncValue?.value?.firstOrNull?.description;
 
-    /// 追加されたToDoのdescriptionがテストになっているかを確認する。
+    /// 追加されたToDoのdescriptionがtestになっているかを確認する。
     expect(description, expectedDescription);
   });
 
@@ -100,9 +104,6 @@ void main() {
     await container
         .read(todoControllerProvider.notifier)
         .addTodo(expectedDescription);
-
-    // TODO：完了機能を実装した上でテストコードを追加してみようしてみよう。
-    /// ヒント：完了のための関数を実行したあと、verifyInOrderにて、isCompletedがfalseからtrueに変化することを確かめよう。
 
     /// リスナーがどのような変化をしたかその変遷をチェックする
     verifyInOrder([
