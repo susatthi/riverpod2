@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod2/feature/todo/model/todo.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../config/firestore/firestore_provider.dart';
+import '../../../config/firebase/firestore/firestore_provider.dart';
 
 part 'todo_provider.g.dart';
 
@@ -38,25 +38,30 @@ CollectionReference<ToDo?> todoReference(TodoReferenceRef ref) {
 
 @riverpod
 Stream<List<ToDo>> todos(TodosRef ref) {
+  /// コメントを外してあえてエラーを起こしてみよう
+  // throw Exception();
+
   return ref
       .watch(todoReferenceProvider)
       .orderBy('updatedAt', descending: true)
       .snapshots()
-      .map((event) => event.docs.map((e) => e.data()).nonNulls.toList());
+      .map(
+        (event) => event.docs.map((e) => e.data()).nonNulls.toList(),
+      );
 }
 
 /// TODO③：完了状態になっているTodoインスタンスはすべて下にまとまるように順番を変更するProviderを作ってみよう
 /// todosProviderを使ってやれば簡単にできそうだね。
 
 @riverpod
-class TodoFormController extends _$TodoFormController {
+class TodoController extends _$TodoController {
   @override
   FutureOr<void> build() {}
 
   Future<void> addTodo(String text) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      ref.read(todoReferenceProvider).add(ToDo(description: text));
+      await ref.read(todoReferenceProvider).add(ToDo(description: text));
     });
   }
 

@@ -52,23 +52,23 @@ final todosProvider = AutoDisposeStreamProvider<List<ToDo>>.internal(
 );
 
 typedef TodosRef = AutoDisposeStreamProviderRef<List<ToDo>>;
-String _$todoFormControllerHash() =>
-    r'6e017f66ae006058214d261974fd6886fb99d0e2';
+String _$todoControllerHash() => r'7102e9097b69e26e9e8963018a9220262f61caaf';
 
 /// TODO③：完了状態になっているTodoインスタンスはすべて下にまとまるように順番を変更するProviderを作ってみよう
+/// todosProviderを使ってやれば簡単にできそうだね。
 ///
-/// Copied from [TodoFormController].
-@ProviderFor(TodoFormController)
-final todoFormControllerProvider =
-    AutoDisposeAsyncNotifierProvider<TodoFormController, void>.internal(
-  TodoFormController.new,
-  name: r'todoFormControllerProvider',
+/// Copied from [TodoController].
+@ProviderFor(TodoController)
+final todoControllerProvider =
+    AutoDisposeAsyncNotifierProvider<TodoController, void>.internal(
+  TodoController.new,
+  name: r'todoControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$todoFormControllerHash,
+      : _$todoControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$TodoFormController = AutoDisposeAsyncNotifier<void>;
+typedef _$TodoController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

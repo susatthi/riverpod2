@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod2/config/router/router_provider.dart';
 import 'package:riverpod2/feature/todo/page/todo/todo_page.dart';
 
-import 'firebase_options.dart';
+import 'config/firebase/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

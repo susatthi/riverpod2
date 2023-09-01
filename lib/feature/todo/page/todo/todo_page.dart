@@ -12,13 +12,18 @@ class ToDoPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: TodoListView(),
-          ),
-          TodoForm(),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: TodoListView(),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: TodoForm(),
+            ),
+          ],
+        ),
       ),
     );
   }

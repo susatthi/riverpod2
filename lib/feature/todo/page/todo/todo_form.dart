@@ -31,14 +31,14 @@ class _TodoFormState extends ConsumerState<TodoForm> {
   Future<void> addTodo() async {
     ref.read(testFunctionProvider)();
     ref
-        .read(todoFormControllerProvider.notifier)
+        .read(todoControllerProvider.notifier)
         .addTodo(textEditingController.text);
     textEditingController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(todoFormControllerProvider);
+    final state = ref.watch(todoControllerProvider);
 
     return SafeArea(
       child: Row(
@@ -49,6 +49,8 @@ class _TodoFormState extends ConsumerState<TodoForm> {
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
+              onFieldSubmitted:
+                  textEditingController.text.isEmpty ? null : (_) => addTodo(),
             ),
           ),
           if (state.isLoading)
