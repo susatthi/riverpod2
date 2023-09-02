@@ -54,12 +54,13 @@ Stream<List<ToDo>> todos(TodosRef ref) {
       .orderBy('updatedAt', descending: true)
       .snapshots()
       .map(
-        (event) => event.docs.map((e) => e.data()).nonNulls.toList(),
+        (event) => event.docs
+            .map((e) => e.data()?.copyWith(id: e.id))
+            .nonNulls
+            .toList()
+          ..sort((a, b) => a.isCompleted ? 1 : 0),
       );
 }
-
-/// TODO③：完了状態になっているTodoインスタンスはすべて下にまとまるように順番を変更するProviderを作ってみよう
-/// todosProviderを使ってやれば簡単にできそうだね。
 
 @riverpod
 class TodoController extends _$TodoController {
@@ -77,6 +78,22 @@ class TodoController extends _$TodoController {
     });
   }
 
-  /// TODO②：指定したTodoインスタンスを完了状態に変更する関数を実装してみよう
-  /// TodoクラスのisCompletedプロパティをtrueに変更すればいいね
+  Future<void> completeTodo(ToDo todo) async {
+    /// 何かが実行中であれば実行しない。
+    if (state.isLoading) {
+      return;
+    }
+    if (todo.id == null) {
+      return;
+    }
+
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(todoReferenceProvider).doc(todo.id).set(
+          todo.copyWith(
+            isCompleted: true,
+          ),
+          SetOptions(merge: true));
+    });
+  }
 }
