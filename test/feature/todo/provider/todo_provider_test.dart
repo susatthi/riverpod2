@@ -73,12 +73,20 @@ void main() {
     expect(todo?.isCompleted, false);
 
     /// [ToDo]を完了にする
-    await container.read(todoControllerProvider.notifier).completeTodo(todo!);
+    await container.read(todoControllerProvider.notifier).toggleComplete(todo!);
 
     todo = asyncValue?.value?.firstOrNull;
 
     /// ToDoが完了になっているかを確認する。
     expect(todo?.isCompleted, true);
+
+    /// [ToDo]を未完了にする
+    await container.read(todoControllerProvider.notifier).toggleComplete(todo!);
+
+    todo = asyncValue?.value?.firstOrNull;
+
+    /// ToDoが未完了になっているかを確認する。
+    expect(todo?.isCompleted, false);
   });
 
   test('上級編：todosのテスト', () async {

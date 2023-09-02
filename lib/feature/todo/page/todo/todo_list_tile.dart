@@ -20,7 +20,7 @@ class TodoListTile extends ConsumerWidget {
       child: CheckboxListTile(
         value: todo.isCompleted,
         onChanged: (value) =>
-            ref.read(todoControllerProvider.notifier).completeTodo(todo),
+            ref.read(todoControllerProvider.notifier).toggleComplete(todo),
         title: Text(
           todo.description,
           style: TextStyle(

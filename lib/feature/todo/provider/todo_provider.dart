@@ -79,7 +79,7 @@ class TodoController extends _$TodoController {
     });
   }
 
-  Future<void> completeTodo(ToDo todo) async {
+  Future<void> toggleComplete(ToDo todo) async {
     /// 何かが実行中であれば実行しない。
     if (state.isLoading) {
       return;
@@ -92,7 +92,7 @@ class TodoController extends _$TodoController {
     state = await AsyncValue.guard(() async {
       await ref.read(todoReferenceProvider).doc(todo.id).set(
           todo.copyWith(
-            isCompleted: true,
+            isCompleted: !todo.isCompleted,
           ),
           SetOptions(merge: true));
     });
