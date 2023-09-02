@@ -54,12 +54,13 @@ Stream<List<ToDo>> todos(TodosRef ref) {
       .orderBy('updatedAt', descending: true)
       .snapshots()
       .map(
-        (event) => event.docs
-            .map((e) => e.data()?.copyWith(id: e.id))
-            .nonNulls
-            .toList()
-          ..sort((a, b) => a.isCompleted ? 1 : 0),
-      );
+    (event) {
+      final todos =
+          event.docs.map((e) => e.data()?.copyWith(id: e.id)).nonNulls.toList();
+      return todos.where((e) => !e.isCompleted).toList() +
+          todos.where((e) => e.isCompleted).toList();
+    },
+  );
 }
 
 @riverpod

@@ -24,6 +24,7 @@ class TodoListTile extends ConsumerWidget {
           decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
         ),
       ),
+      subtitle: Text(todo.updatedAt.dateTime.toString()),
     );
   }
 }
