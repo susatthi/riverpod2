@@ -97,4 +97,19 @@ class TodoController extends _$TodoController {
           SetOptions(merge: true));
     });
   }
+
+  Future<void> deleteTodo(ToDo todo) async {
+    /// 何かが実行中であれば実行しない。
+    if (state.isLoading) {
+      return;
+    }
+    if (todo.id == null) {
+      return;
+    }
+
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(todoReferenceProvider).doc(todo.id).delete();
+    });
+  }
 }

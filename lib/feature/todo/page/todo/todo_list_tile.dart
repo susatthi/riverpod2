@@ -14,17 +14,59 @@ class TodoListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return CheckboxListTile(
-      value: todo.isCompleted,
-      onChanged: (value) =>
-          ref.read(todoControllerProvider.notifier).completeTodo(todo),
-      title: Text(
-        todo.description,
-        style: TextStyle(
-          decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
+    return InkWell(
+      onLongPress: () => showDialog(
+          context: context, builder: (context) => _ConfirmDialog(todo: todo)),
+      child: CheckboxListTile(
+        value: todo.isCompleted,
+        onChanged: (value) =>
+            ref.read(todoControllerProvider.notifier).completeTodo(todo),
+        title: Text(
+          todo.description,
+          style: TextStyle(
+            decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
+          ),
+        ),
+        subtitle: Row(
+          children: [
+            Text(todo.id ?? 'null'),
+            const Spacer(),
+            Text(todo.updatedAt.dateTime.toString()),
+          ],
         ),
       ),
-      subtitle: Text(todo.updatedAt.dateTime.toString()),
+    );
+  }
+}
+
+class _ConfirmDialog extends ConsumerWidget {
+  const _ConfirmDialog({
+    required this.todo,
+  });
+
+  final ToDo todo;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return AlertDialog(
+      content: Text('${todo.id}を削除しますか？'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text(
+            'いいえ',
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            Navigator.of(context).pop();
+            await ref.read(todoControllerProvider.notifier).deleteTodo(todo);
+          },
+          child: const Text(
+            'はい',
+          ),
+        ),
+      ],
     );
   }
 }
